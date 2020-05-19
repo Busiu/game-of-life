@@ -3,11 +3,14 @@ import java.util.ArrayList;
 public class Simulator {
 
     private ArrayList<World> worlds;
+    private Synchronizer synchronizer;
 
     public Simulator() {
         WorldInitializer worldInitializer = new WorldInitializer();
         this.worlds = new ArrayList<>();
         this.worlds.add(worldInitializer.initBulletWorld());
+
+        this.synchronizer = new Synchronizer(30);
     }
 
     public ArrayList<World> getWorlds() {
@@ -23,6 +26,7 @@ public class Simulator {
         // Temporary moving to the next world
         for (int i = 0; i < 1000; i++) {
             System.out.println(world);
+            synchronizer.startMeasureTime();
             Cell[][] newGrid = new Cell[world.getWidth()][world.getHeight()];
             for (int y = 0; y < world.getHeight(); y++) {
                 for (int x = 0; x < world.getWidth(); x++) {
@@ -41,6 +45,7 @@ public class Simulator {
                 }
             }
             world.setGrid(newGrid);
+            synchronizer.synchronize();
         }
     }
 }

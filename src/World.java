@@ -10,13 +10,13 @@ public class World {
         this.height = height;
     }
 
-    public World(int[][] grid) {
+    public World(char[][] grid) {
         this.width = grid[0].length;
         this.height = grid.length;
         this.grid = new Cell[this.width][this.height];
         for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < this.width; x++) {
-                if (grid[y][x] == 1)
+                if (grid[y][x] == 'X')
                     this.grid[y][x] = new Cell(true);
                 else
                     this.grid[y][x] = new Cell(false);

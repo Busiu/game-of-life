@@ -13,10 +13,6 @@ public class Simulator {
         this.synchronizer = new Synchronizer(30);
     }
 
-    public ArrayList<World> getWorlds() {
-        return worlds;
-    }
-
     public void start() {
         for (int i = 0; i < worlds.size(); i++)
             simulate(worlds.get(i));
@@ -25,7 +21,7 @@ public class Simulator {
     private void simulate(World world) {
         // Temporary moving to the next world
         for (int i = 0; i < 1000; i++) {
-            System.out.println(world);
+            display(world);
             synchronizer.startMeasureTime();
             Cell[][] newGrid = new Cell[world.getWidth()][world.getHeight()];
             for (int y = 0; y < world.getHeight(); y++) {
@@ -47,5 +43,10 @@ public class Simulator {
             world.setGrid(newGrid);
             synchronizer.synchronize();
         }
+    }
+
+    private void display(World world) {
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        System.out.println(world);
     }
 }

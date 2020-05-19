@@ -4,12 +4,6 @@ public class World {
     private int width;
     private int height;
 
-    public World(int width, int height) {
-        this.grid = new Cell[width][height];
-        this.width = width;
-        this.height = height;
-    }
-
     public World(char[][] grid) {
         this.width = grid[0].length;
         this.height = grid.length;

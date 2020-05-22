@@ -6,8 +6,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Displayer extends Application {
 
@@ -23,7 +23,7 @@ public class Displayer extends Application {
     private AnimationTimer simulationTimer;
     private Simulator simulator;
 
-    private List<Rectangle> cells;
+    private Map<Position, Rectangle> cells;
 
     @Override
     public void start(Stage stage) {
@@ -41,15 +41,21 @@ public class Displayer extends Application {
         int cellWidth = windowWidth / currentWorldWidth;
         int cellHeight = windowHeight / currentWorldHeight;
 
-        cells = new ArrayList<>();
+        Map<Position, Cell> stateOfCurrentWorld = simulator.getStateOfCurrentWorld();
+        cells = new HashMap<>();
         GridPane gridPane = new GridPane();
 
         for (int i = 0; i < currentWorldWidth; i++) {
             for (int j = 0; j < currentWorldHeight; j++) {
                 Rectangle cell = new Rectangle(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-                cell.setFill(Color.AQUAMARINE);
-                cells.add(cell);
-                gridPane.add(cell, j, i);
+                if (stateOfCurrentWorld.get(new Position(i, j)).isAlive()) {
+                    cell.setFill(Color.AQUAMARINE);
+                }
+                else {
+                    cell.setFill(Color.BROWN);
+                }
+                cells.put(new Position(i, j), cell);
+                gridPane.add(cell, i, j);
             }
         }
 
@@ -65,12 +71,24 @@ public class Displayer extends Application {
             public void handle(long now) {
                 if (now - lastUpdate >= refreshRate) {
                     lastUpdate = now;
-                    simulator.simulateOneStep();
+                    Map<Position, Cell> currentWorldMap = simulator.simulateOneStep();
+                    update(currentWorldMap);
                 }
             }
         };
 
         simulationTimer.start();
+    }
+
+    private void update(Map<Position, Cell> currentWorldMap) {
+        for (Position position : currentWorldMap.keySet()) {
+            if (currentWorldMap.get(position).isAlive()) {
+                cells.get(position).setFill(Color.BROWN);
+            }
+            else {
+                cells.get(position).setFill(Color.AQUAMARINE);
+            }
+        }
     }
 
     public static void main(String[] args) {

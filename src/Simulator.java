@@ -14,7 +14,7 @@ public class Simulator {
         this.currentWorld = 0;
     }
 
-    public void simulateOneStep() {
+    public Map<Position, Cell> simulateOneStep() {
         World world = worlds.get(currentWorld);
         Map<Position, Cell> newGrid = new HashMap<>();
         for (Position position : world.getGrid().keySet()) {
@@ -36,7 +36,8 @@ public class Simulator {
             }
         }
         world.setGrid(newGrid);
-        display(world);
+
+        return getStateOfCurrentWorld();
     }
 
     public int getHeightOfCurrentWorld() {
@@ -47,8 +48,7 @@ public class Simulator {
         return worlds.get(currentWorld).getWidth();
     }
 
-    private void display(World world) {
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.println(world);
+    public Map<Position, Cell> getStateOfCurrentWorld() {
+        return worlds.get(currentWorld).getGrid();
     }
 }

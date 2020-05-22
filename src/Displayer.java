@@ -33,11 +33,11 @@ public class Displayer extends Application {
         simulator = new Simulator();
         this.stage = stage;
 
-        initWindowForSimulationOfNewWorld();
+        initDisplayForSimulationOfNewWorld();
         createSimulationLoop();
     }
 
-    private void initWindowForSimulationOfNewWorld() {
+    private void initDisplayForSimulationOfNewWorld() {
         int currentWorldMapHeight = simulator.getHeightOfCurrentWorldMap();
         int currentWorldMapWidth = simulator.getWidthOfCurrentWorldMap();
 

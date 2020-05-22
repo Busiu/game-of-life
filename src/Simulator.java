@@ -17,8 +17,9 @@ public class Simulator {
     }
 
     public void start() {
-        for (int i = 0; i < worlds.size(); i++)
+        for (int i = 0; i < worlds.size(); i++) {
             simulate(worlds.get(i));
+        }
     }
 
     private void simulate(World world) {
@@ -29,16 +30,21 @@ public class Simulator {
             Map<Position, Cell> newGrid = new HashMap<>();
             for (Position position : world.getGrid().keySet()) {
                 CellState cellState = world.getCellState(position);
-                if (cellState.isAlive() && cellState.getnAliveNeighbours() < 2)
+                if (cellState.isAlive() && cellState.getnAliveNeighbours() < 2) {
                     newGrid.put(position, new Cell(false));
-                else if (cellState.isAlive() && cellState.getnAliveNeighbours() < 4)
+                }
+                else if (cellState.isAlive() && cellState.getnAliveNeighbours() < 4) {
                     newGrid.put(position, new Cell(true));
-                else if (cellState.isAlive())
+                }
+                else if (cellState.isAlive()) {
                     newGrid.put(position, new Cell(false));
-                else if (!cellState.isAlive() && cellState.getnAliveNeighbours() == 3)
+                }
+                else if (!cellState.isAlive() && cellState.getnAliveNeighbours() == 3) {
                     newGrid.put(position, new Cell(true));
-                else
+                }
+                else {
                     newGrid.put(position, new Cell(cellState.isAlive()));
+                }
             }
             world.setGrid(newGrid);
             synchronizer.synchronize();

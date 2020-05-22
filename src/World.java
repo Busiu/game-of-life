@@ -13,10 +13,12 @@ public class World {
         this.grid = new HashMap<>();
         for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < this.width; x++) {
-                if (grid[y][x] == 'X')
+                if (grid[y][x] == 'X') {
                     this.grid.put(new Position(x, y), new Cell(true));
-                else
+                }
+                else {
                     this.grid.put(new Position(x, y), new Cell(false));
+                }
             }
         }
     }

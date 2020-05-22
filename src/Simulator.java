@@ -13,7 +13,7 @@ public class Simulator {
         this.worlds = new ArrayList<>();
         this.worlds.add(worldInitializer.initBulletWorld());
 
-        this.synchronizer = new Synchronizer(30);
+        this.synchronizer = new Synchronizer();
     }
 
     public void start() {

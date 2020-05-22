@@ -1,11 +1,7 @@
 public class Synchronizer {
 
-    private int FPS;
+    private final static int FPS = 30;
     private long startTime;
-
-    public Synchronizer(int FPS) {
-        this.FPS = FPS;
-    }
 
     public void startMeasureTime() {
         startTime = System.currentTimeMillis();

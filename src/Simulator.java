@@ -5,51 +5,51 @@ import java.util.Map;
 public class Simulator {
 
     private ArrayList<World> worlds;
-    private int currentWorld;
+    private int currentWorldIndex;
 
     public Simulator() {
         WorldInitializer worldInitializer = new WorldInitializer();
         this.worlds = new ArrayList<>();
         this.worlds.add(worldInitializer.initWorld1());
         this.worlds.add(worldInitializer.initBulletWorld());
-        this.currentWorld = 0;
+        this.currentWorldIndex = 0;
     }
 
     public Map<Position, Cell> simulateOneStep() {
-        World world = worlds.get(currentWorld);
-        Map<Position, Cell> newGrid = new HashMap<>();
-        for (Position position : world.getGrid().keySet()) {
+        World world = worlds.get(currentWorldIndex);
+        Map<Position, Cell> newWorldMapState = new HashMap<>();
+        for (Position position : world.getWorldMapState().keySet()) {
             CellState cellState = world.getCellState(position);
             if (cellState.isAlive() && cellState.getnAliveNeighbours() < 2) {
-                newGrid.put(position, new Cell(false));
+                newWorldMapState.put(position, new Cell(false));
             }
             else if (cellState.isAlive() && cellState.getnAliveNeighbours() < 4) {
-                newGrid.put(position, new Cell(true));
+                newWorldMapState.put(position, new Cell(true));
             }
             else if (cellState.isAlive()) {
-                newGrid.put(position, new Cell(false));
+                newWorldMapState.put(position, new Cell(false));
             }
             else if (!cellState.isAlive() && cellState.getnAliveNeighbours() == 3) {
-                newGrid.put(position, new Cell(true));
+                newWorldMapState.put(position, new Cell(true));
             }
             else {
-                newGrid.put(position, new Cell(cellState.isAlive()));
+                newWorldMapState.put(position, new Cell(cellState.isAlive()));
             }
         }
-        world.setGrid(newGrid);
+        world.setWorldMapState(newWorldMapState);
 
-        return getStateOfCurrentWorld();
+        return getStateOfCurrentWorldMap();
     }
 
-    public int getHeightOfCurrentWorld() {
-        return worlds.get(currentWorld).getHeight();
+    public int getHeightOfCurrentWorldMap() {
+        return worlds.get(currentWorldIndex).getHeight();
     }
 
-    public int getWidthOfCurrentWorld() {
-        return worlds.get(currentWorld).getWidth();
+    public int getWidthOfCurrentWorldMap() {
+        return worlds.get(currentWorldIndex).getWidth();
     }
 
-    public Map<Position, Cell> getStateOfCurrentWorld() {
-        return worlds.get(currentWorld).getGrid();
+    public Map<Position, Cell> getStateOfCurrentWorldMap() {
+        return worlds.get(currentWorldIndex).getWorldMapState();
     }
 }

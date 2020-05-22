@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -12,67 +13,69 @@ import java.util.Map;
 public class Displayer extends Application {
 
     private final static int FPS = 30;
-    private final static int nanosInSecond = 1_000_000_000;
-    private final static int refreshRate = nanosInSecond / FPS;
+    private final static int NANOS_IN_SECOND = 1_000_000_000;
+    private final static int REFRESH_RATE = NANOS_IN_SECOND / FPS;
 
-    private final static int windowHeight = 800;
-    private final static int windowWidth = 800;
+    private final static int WINDOW_HEIGHT = 800;
+    private final static int WINDOW_WIDTH = 800;
+
+    private final static Paint ALIVE_COLOR = Color.BROWN;
+    private final static Paint DEAD_COLOR = Color.AQUAMARINE;
 
     private Stage stage;
 
-    private AnimationTimer simulationTimer;
     private Simulator simulator;
 
-    private Map<Position, Rectangle> cells;
+    private Map<Position, Rectangle> worldCells;
 
     @Override
     public void start(Stage stage) {
         simulator = new Simulator();
         this.stage = stage;
 
-        initWindowForSimulator();
+        initWindowForSimulationOfNewWorld();
         createSimulationLoop();
     }
 
-    private void initWindowForSimulator() {
-        int currentWorldHeight = simulator.getHeightOfCurrentWorld();
-        int currentWorldWidth = simulator.getWidthOfCurrentWorld();
+    private void initWindowForSimulationOfNewWorld() {
+        int currentWorldMapHeight = simulator.getHeightOfCurrentWorldMap();
+        int currentWorldMapWidth = simulator.getWidthOfCurrentWorldMap();
 
-        int cellWidth = windowWidth / currentWorldWidth;
-        int cellHeight = windowHeight / currentWorldHeight;
+        int cellWidth = WINDOW_WIDTH / currentWorldMapWidth;
+        int cellHeight = WINDOW_HEIGHT / currentWorldMapHeight;
 
-        Map<Position, Cell> stateOfCurrentWorld = simulator.getStateOfCurrentWorld();
-        cells = new HashMap<>();
-        GridPane gridPane = new GridPane();
+        Map<Position, Cell> stateOfCurrentWorldMap = simulator.getStateOfCurrentWorldMap();
+        worldCells = new HashMap<>();
+        GridPane worldMapGridPane = new GridPane();
 
-        for (int i = 0; i < currentWorldWidth; i++) {
-            for (int j = 0; j < currentWorldHeight; j++) {
+        for (int i = 0; i < currentWorldMapWidth; i++) {
+            for (int j = 0; j < currentWorldMapHeight; j++) {
                 Rectangle cell = new Rectangle(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-                if (stateOfCurrentWorld.get(new Position(i, j)).isAlive()) {
-                    cell.setFill(Color.AQUAMARINE);
+                if (stateOfCurrentWorldMap.get(new Position(i, j)).isAlive()) {
+                    cell.setFill(ALIVE_COLOR);
                 }
                 else {
-                    cell.setFill(Color.BROWN);
+                    cell.setFill(DEAD_COLOR);
                 }
-                cells.put(new Position(i, j), cell);
-                gridPane.add(cell, i, j);
+                worldCells.put(new Position(i, j), cell);
+                worldMapGridPane.add(cell, i, j);
             }
         }
 
-        Scene scene = new Scene(gridPane, windowWidth, windowHeight);
+        Scene scene = new Scene(worldMapGridPane, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setScene(scene);
         stage.show();
     }
 
     private void createSimulationLoop() {
-        simulationTimer = new AnimationTimer() {
+        AnimationTimer simulationTimer = new AnimationTimer() {
             private long lastUpdate;
             @Override
             public void handle(long now) {
-                if (now - lastUpdate >= refreshRate) {
+                if (now - lastUpdate >= REFRESH_RATE) {
                     lastUpdate = now;
-                    Map<Position, Cell> currentWorldMap = simulator.simulateOneStep();
-                    update(currentWorldMap);
+                    Map<Position, Cell> currentWorldMapState = simulator.simulateOneStep();
+                    updateDisplay(currentWorldMapState);
                 }
             }
         };
@@ -80,13 +83,13 @@ public class Displayer extends Application {
         simulationTimer.start();
     }
 
-    private void update(Map<Position, Cell> currentWorldMap) {
-        for (Position position : currentWorldMap.keySet()) {
-            if (currentWorldMap.get(position).isAlive()) {
-                cells.get(position).setFill(Color.BROWN);
+    private void updateDisplay(Map<Position, Cell> currentWorldMapState) {
+        for (Position position : currentWorldMapState.keySet()) {
+            if (currentWorldMapState.get(position).isAlive()) {
+                worldCells.get(position).setFill(ALIVE_COLOR);
             }
             else {
-                cells.get(position).setFill(Color.AQUAMARINE);
+                worldCells.get(position).setFill(DEAD_COLOR);
             }
         }
     }

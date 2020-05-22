@@ -39,6 +39,14 @@ public class Simulator {
         display(world);
     }
 
+    public int getHeightOfCurrentWorld() {
+        return worlds.get(currentWorld).getHeight();
+    }
+
+    public int getWidthOfCurrentWorld() {
+        return worlds.get(currentWorld).getWidth();
+    }
+
     private void display(World world) {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println(world);

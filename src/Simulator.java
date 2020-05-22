@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Simulator {
 
     private ArrayList<World> worlds;
     private Synchronizer synchronizer;
+    private final static int nIters = 1000;
 
     public Simulator() {
         WorldInitializer worldInitializer = new WorldInitializer();
@@ -20,25 +23,22 @@ public class Simulator {
 
     private void simulate(World world) {
         // Temporary moving to the next world
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < nIters; i++) {
             display(world);
             synchronizer.startMeasureTime();
-            Cell[][] newGrid = new Cell[world.getWidth()][world.getHeight()];
-            for (int y = 0; y < world.getHeight(); y++) {
-                for (int x = 0; x < world.getWidth(); x++) {
-
-                    CellState cellState = world.getCellState(y, x);
-                    if (cellState.isAlive() && cellState.getnAliveNeighbours() < 2)
-                        newGrid[y][x] = new Cell(false);
-                    else if (cellState.isAlive() && cellState.getnAliveNeighbours() < 4)
-                        newGrid[y][x] = new Cell(true);
-                    else if (cellState.isAlive())
-                        newGrid[y][x] = new Cell(false);
-                    else if (!cellState.isAlive() && cellState.getnAliveNeighbours() == 3)
-                        newGrid[y][x] = new Cell(true);
-                    else
-                        newGrid[y][x] = new Cell(cellState.isAlive());
-                }
+            Map<Position, Cell> newGrid = new HashMap<>();
+            for (Position position : world.getGrid().keySet()) {
+                CellState cellState = world.getCellState(position);
+                if (cellState.isAlive() && cellState.getnAliveNeighbours() < 2)
+                    newGrid.put(position, new Cell(false));
+                else if (cellState.isAlive() && cellState.getnAliveNeighbours() < 4)
+                    newGrid.put(position, new Cell(true));
+                else if (cellState.isAlive())
+                    newGrid.put(position, new Cell(false));
+                else if (!cellState.isAlive() && cellState.getnAliveNeighbours() == 3)
+                    newGrid.put(position, new Cell(true));
+                else
+                    newGrid.put(position, new Cell(cellState.isAlive()));
             }
             world.setGrid(newGrid);
             synchronizer.synchronize();

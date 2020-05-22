@@ -1,27 +1,31 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class World {
 
-    private Cell[][] grid;
+    private Map<Position, Cell> grid;
     private int width;
     private int height;
 
     public World(char[][] grid) {
         this.width = grid[0].length;
         this.height = grid.length;
-        this.grid = new Cell[this.width][this.height];
+        this.grid = new HashMap<>();
         for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < this.width; x++) {
                 if (grid[y][x] == 'X')
-                    this.grid[y][x] = new Cell(true);
+                    this.grid.put(new Position(x, y), new Cell(true));
                 else
-                    this.grid[y][x] = new Cell(false);
+                    this.grid.put(new Position(x, y), new Cell(false));
             }
         }
     }
 
-    public Cell[][] getGrid() {
+    public Map<Position, Cell> getGrid() {
         return grid;
     }
-    public void setGrid(Cell[][] grid) {
+
+    public void setGrid(Map<Position, Cell> grid) {
         this.grid = grid;
     }
 
@@ -33,44 +37,24 @@ public class World {
         return height;
     }
 
-    public CellState getCellState(int y, int x) {
-        boolean isAlive = grid[y][x].isAlive();
+    public CellState getCellState(Position position) {
+        Cell cell = grid.get(position);
+        int[][] cellNeighbours = Cell.getNeighbours();
         int nAliveNeighbours = 0;
 
-        if (y - 1 >= 0) {
-            if (x - 1 >= 0) {
-                if (grid[y - 1][x - 1].isAlive())
-                    nAliveNeighbours++;
+        for (int i = 0; i < cellNeighbours.length; i++) {
+            Cell neighbourCell = grid.get(
+                    new Position(position.getX() + cellNeighbours[i][0], position.getY() + cellNeighbours[i][1])
+            );
+            if (neighbourCell == null) {
+                continue;
             }
-            if (grid[y - 1][x].isAlive())
+            else if (neighbourCell.isAlive()) {
                 nAliveNeighbours++;
-            if (x + 1 < getWidth()) {
-                if (grid[y - 1][x + 1].isAlive())
-                    nAliveNeighbours++;
-            }
-        }
-        if (x - 1 >= 0) {
-            if (grid[y][x - 1].isAlive())
-                nAliveNeighbours++;
-        }
-        if (x + 1 < getWidth()) {
-            if (grid[y][x + 1].isAlive())
-                nAliveNeighbours++;
-        }
-        if (y + 1 < getHeight()) {
-            if (x - 1 >= 0) {
-                if (grid[y + 1][x - 1].isAlive())
-                    nAliveNeighbours++;
-            }
-            if (grid[y + 1][x].isAlive())
-                nAliveNeighbours++;
-            if (x + 1 < getWidth()) {
-                if (grid[y + 1][x + 1].isAlive())
-                    nAliveNeighbours++;
             }
         }
 
-        return new CellState(isAlive, nAliveNeighbours);
+        return new CellState(cell.isAlive(), nAliveNeighbours);
     }
 
     @Override
@@ -78,10 +62,12 @@ public class World {
         StringBuilder result = new StringBuilder();
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getWidth(); x++) {
-                if (grid[y][x].isAlive())
+                if (grid.get(new Position(x, y)).isAlive()) {
                     result.append("X ");
-                else
+                }
+                else {
                     result.append(". ");
+                }
             }
             result.append("\n");
         }

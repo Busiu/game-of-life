@@ -21,6 +21,7 @@ public class Simulator {
     public Map<Position, Cell> simulateOneStep() {
         World world = worlds.get(currentWorldIndex);
         Map<Position, Cell> newWorldMapState = new HashMap<>();
+
         for (Position position : world.getWorldMapState().keySet()) {
             CellState cellState = world.getCellState(position);
             if (cellState.isAlive() && cellState.getnAliveNeighbours() < 2) {
@@ -56,9 +57,11 @@ public class Simulator {
         return worlds.get(currentWorldIndex).getWorldMapState();
     }
 
-    public void moveToTheNextWorld() {
+    public boolean moveToTheNextWorld() {
         if (currentWorldIndex < worlds.size() - 1) {
             currentWorldIndex++;
+            return true;
         }
+        return false;
     }
 }

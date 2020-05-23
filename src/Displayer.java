@@ -1,5 +1,6 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -79,8 +80,12 @@ public class Displayer extends Application {
     }
 
     private void enterListener() {
-        simulator.moveToTheNextWorld();
-        createDisplayForSimulationOfNewWorld();
+        if (simulator.moveToTheNextWorld()) {
+            createDisplayForSimulationOfNewWorld();
+        }
+        else {
+            Platform.exit();
+        }
     }
 
     private void createSimulationLoop() {

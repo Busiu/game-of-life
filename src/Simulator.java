@@ -10,8 +10,10 @@ public class Simulator {
     public Simulator() {
         WorldInitializer worldInitializer = new WorldInitializer();
         this.worlds = new ArrayList<>();
-        this.worlds.add(worldInitializer.initWorld1());
         this.worlds.add(worldInitializer.initBulletWorld());
+        this.worlds.add(worldInitializer.initWorld1());
+        this.worlds.add(worldInitializer.initWorld2());
+        this.worlds.add(worldInitializer.initWorld3());
         this.currentWorldIndex = 0;
     }
 

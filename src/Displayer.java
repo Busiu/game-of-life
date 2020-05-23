@@ -1,9 +1,7 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -51,17 +49,17 @@ public class Displayer extends Application {
         worldCells = new HashMap<>();
         GridPane worldMapGridPane = new GridPane();
 
-        for (int i = 0; i < currentWorldMapWidth; i++) {
-            for (int j = 0; j < currentWorldMapHeight; j++) {
-                Rectangle cell = new Rectangle(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-                if (stateOfCurrentWorldMap.get(new Position(i, j)).isAlive()) {
+        for (int xCoord = 0; xCoord < currentWorldMapWidth; xCoord++) {
+            for (int yCoord = 0; yCoord < currentWorldMapHeight; yCoord++) {
+                Rectangle cell = new Rectangle(xCoord * cellWidth, yCoord * cellHeight, cellWidth, cellHeight);
+                if (stateOfCurrentWorldMap.get(new Position(xCoord, yCoord)).isAlive()) {
                     cell.setFill(ALIVE_COLOR);
                 }
                 else {
                     cell.setFill(DEAD_COLOR);
                 }
-                worldCells.put(new Position(i, j), cell);
-                worldMapGridPane.add(cell, i, j);
+                worldCells.put(new Position(xCoord, yCoord), cell);
+                worldMapGridPane.add(cell, xCoord, yCoord);
             }
         }
 

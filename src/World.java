@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class World {
 
@@ -11,13 +12,30 @@ public class World {
         this.width = pattern[0].length;
         this.height = pattern.length;
         this.worldMapState = new HashMap<>();
-        for (int y = 0; y < this.height; y++) {
-            for (int x = 0; x < this.width; x++) {
-                if (pattern[y][x] == 'X') {
-                    this.worldMapState.put(new Position(x, y), new Cell(true));
+        for (int yCoord = 0; yCoord < this.height; yCoord++) {
+            for (int xCoord = 0; xCoord < this.width; xCoord++) {
+                if (pattern[yCoord][xCoord] == 'X') {
+                    this.worldMapState.put(new Position(xCoord, yCoord), new Cell(true));
                 }
                 else {
-                    this.worldMapState.put(new Position(x, y), new Cell(false));
+                    this.worldMapState.put(new Position(xCoord, yCoord), new Cell(false));
+                }
+            }
+        }
+    }
+
+    public World(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.worldMapState = new HashMap<>();
+        Random generator = new Random();
+        for (int yCoord = 0; yCoord < this.height; yCoord++) {
+            for (int xCoord = 0; xCoord < this.width; xCoord++) {
+                if (generator.nextDouble() > 0.5) {
+                    this.worldMapState.put(new Position(xCoord, yCoord), new Cell(true));
+                }
+                else {
+                    this.worldMapState.put(new Position(xCoord, yCoord), new Cell(false));
                 }
             }
         }
@@ -62,9 +80,9 @@ public class World {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (int y = 0; y < getHeight(); y++) {
-            for (int x = 0; x < getWidth(); x++) {
-                if (worldMapState.get(new Position(x, y)).isAlive()) {
+        for (int yCoord = 0; yCoord < getHeight(); yCoord++) {
+            for (int xCoord = 0; xCoord < getWidth(); xCoord++) {
+                if (worldMapState.get(new Position(xCoord, yCoord)).isAlive()) {
                     result.append("X ");
                 }
                 else {

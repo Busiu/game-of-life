@@ -1,34 +1,52 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class World {
 
-    private Map<Position, Cell> grid;
+    private Map<Position, Cell> worldMapState;
     private int width;
     private int height;
 
-    public World(char[][] grid) {
-        this.width = grid[0].length;
-        this.height = grid.length;
-        this.grid = new HashMap<>();
-        for (int y = 0; y < this.height; y++) {
-            for (int x = 0; x < this.width; x++) {
-                if (grid[y][x] == 'X') {
-                    this.grid.put(new Position(x, y), new Cell(true));
+    public World(char[][] pattern) {
+        this.width = pattern[0].length;
+        this.height = pattern.length;
+        this.worldMapState = new HashMap<>();
+        for (int yCoord = 0; yCoord < this.height; yCoord++) {
+            for (int xCoord = 0; xCoord < this.width; xCoord++) {
+                if (pattern[yCoord][xCoord] == 'X') {
+                    this.worldMapState.put(new Position(xCoord, yCoord), new Cell(true));
                 }
                 else {
-                    this.grid.put(new Position(x, y), new Cell(false));
+                    this.worldMapState.put(new Position(xCoord, yCoord), new Cell(false));
                 }
             }
         }
     }
 
-    public Map<Position, Cell> getGrid() {
-        return grid;
+    public World(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.worldMapState = new HashMap<>();
+        Random generator = new Random();
+        for (int yCoord = 0; yCoord < this.height; yCoord++) {
+            for (int xCoord = 0; xCoord < this.width; xCoord++) {
+                if (generator.nextDouble() > 0.5) {
+                    this.worldMapState.put(new Position(xCoord, yCoord), new Cell(true));
+                }
+                else {
+                    this.worldMapState.put(new Position(xCoord, yCoord), new Cell(false));
+                }
+            }
+        }
     }
 
-    public void setGrid(Map<Position, Cell> grid) {
-        this.grid = grid;
+    public Map<Position, Cell> getWorldMapState() {
+        return worldMapState;
+    }
+
+    public void setWorldMapState(Map<Position, Cell> worldMapState) {
+        this.worldMapState = worldMapState;
     }
 
     public int getWidth() {
@@ -40,12 +58,12 @@ public class World {
     }
 
     public CellState getCellState(Position position) {
-        Cell cell = grid.get(position);
+        Cell cell = worldMapState.get(position);
         int[][] cellNeighbours = Cell.getNeighbours();
         int nAliveNeighbours = 0;
 
         for (int i = 0; i < cellNeighbours.length; i++) {
-            Cell neighbourCell = grid.get(
+            Cell neighbourCell = worldMapState.get(
                     new Position(position.getX() + cellNeighbours[i][0], position.getY() + cellNeighbours[i][1])
             );
             if (neighbourCell == null) {
@@ -62,9 +80,9 @@ public class World {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (int y = 0; y < getHeight(); y++) {
-            for (int x = 0; x < getWidth(); x++) {
-                if (grid.get(new Position(x, y)).isAlive()) {
+        for (int yCoord = 0; yCoord < getHeight(); yCoord++) {
+            for (int xCoord = 0; xCoord < getWidth(); xCoord++) {
+                if (worldMapState.get(new Position(xCoord, yCoord)).isAlive()) {
                     result.append("X ");
                 }
                 else {

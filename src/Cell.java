@@ -1,6 +1,6 @@
 public class Cell {
 
-    private boolean isAlive;
+    private final boolean isAlive;
     private final static int[][] neighbours = {
             {-1,-1},
             {-1, 0},

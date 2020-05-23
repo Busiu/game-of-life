@@ -1,7 +1,7 @@
 public class CellState {
 
-    private boolean isAlive;
-    private int nAliveNeighbours;
+    private final boolean isAlive;
+    private final int nAliveNeighbours;
 
     public CellState(boolean isAlive, int nAliveNeighbours) {
         this.isAlive = isAlive;

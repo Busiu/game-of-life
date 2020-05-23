@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Simulator {
 
-    private ArrayList<World> worlds;
+    private List<World> worlds;
     private int currentWorldIndex;
 
     public Simulator() {
@@ -56,6 +57,8 @@ public class Simulator {
     }
 
     public void moveToTheNextWorld() {
-        currentWorldIndex++;
+        if (currentWorldIndex < worlds.size() - 1) {
+            currentWorldIndex++;
+        }
     }
 }

@@ -52,4 +52,8 @@ public class Simulator {
     public Map<Position, Cell> getStateOfCurrentWorldMap() {
         return worlds.get(currentWorldIndex).getWorldMapState();
     }
+
+    public void moveToTheNextWorld() {
+        currentWorldIndex++;
+    }
 }

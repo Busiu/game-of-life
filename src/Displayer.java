@@ -1,6 +1,9 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -22,7 +25,7 @@ public class Displayer extends Application {
     private final static Paint ALIVE_COLOR = Color.BROWN;
     private final static Paint DEAD_COLOR = Color.AQUAMARINE;
 
-    private Stage stage;
+    private Stage simulationStage;
 
     private Simulator simulator;
 
@@ -31,13 +34,13 @@ public class Displayer extends Application {
     @Override
     public void start(Stage stage) {
         simulator = new Simulator();
-        this.stage = stage;
+        this.simulationStage = stage;
 
-        initDisplayForSimulationOfNewWorld();
+        createDisplayForSimulationOfNewWorld();
         createSimulationLoop();
     }
 
-    private void initDisplayForSimulationOfNewWorld() {
+    private void createDisplayForSimulationOfNewWorld() {
         int currentWorldMapHeight = simulator.getHeightOfCurrentWorldMap();
         int currentWorldMapWidth = simulator.getWidthOfCurrentWorldMap();
 
@@ -62,9 +65,24 @@ public class Displayer extends Application {
             }
         }
 
-        Scene scene = new Scene(worldMapGridPane, WINDOW_WIDTH, WINDOW_HEIGHT);
-        stage.setScene(scene);
-        stage.show();
+        Scene simulationScene = new Scene(worldMapGridPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        createKeyListeners(simulationScene);
+
+        simulationStage.setScene(simulationScene);
+        simulationStage.show();
+    }
+
+    private void createKeyListeners(Scene scene) {
+        scene.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                enterListener();
+            }
+        });
+    }
+
+    private void enterListener() {
+        simulator.moveToTheNextWorld();
+        createDisplayForSimulationOfNewWorld();
     }
 
     private void createSimulationLoop() {
@@ -85,12 +103,14 @@ public class Displayer extends Application {
 
     private void updateDisplay(Map<Position, Cell> currentWorldMapState) {
         for (Position position : currentWorldMapState.keySet()) {
+            Paint cellColor;
             if (currentWorldMapState.get(position).isAlive()) {
-                worldCells.get(position).setFill(ALIVE_COLOR);
+                cellColor = ALIVE_COLOR;
             }
             else {
-                worldCells.get(position).setFill(DEAD_COLOR);
+                cellColor = DEAD_COLOR;
             }
+            worldCells.get(position).setFill(cellColor);
         }
     }
 

@@ -41,6 +41,12 @@ public class World {
         }
     }
 
+    public World(Map<Position, Cell> worldMap, int width, int height) {
+        this.worldMapState = worldMap;
+        this.width = width;
+        this.height = height;
+    }
+
     public Map<Position, Cell> getWorldMapState() {
         return worldMapState;
     }

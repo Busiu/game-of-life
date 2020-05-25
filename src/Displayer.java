@@ -9,7 +9,10 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Displayer extends Application {
@@ -21,8 +24,8 @@ public class Displayer extends Application {
     private final static int WINDOW_HEIGHT = 800;
     private final static int WINDOW_WIDTH = 800;
 
-    private final static Paint ALIVE_COLOR = Color.BROWN;
-    private final static Paint DEAD_COLOR = Color.AQUAMARINE;
+    private final static Paint ALIVE_COLOR = Color.BLACK;
+    private final static Paint DEAD_COLOR = Color.GREEN;
 
     private Stage simulationStage;
 
@@ -32,7 +35,16 @@ public class Displayer extends Application {
 
     @Override
     public void start(Stage stage) {
-        simulator = new Simulator();
+        WorldLoaderSupervisor worldLoaderSupervisor = new WorldLoaderSupervisor();
+        List<World> worlds = new ArrayList<>();
+        try {
+            worlds = worldLoaderSupervisor.loadWorldsFromFile("WorldMaps");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        simulator = new Simulator(worlds);
+
         this.simulationStage = stage;
 
         createDisplayForSimulationOfNewWorld();

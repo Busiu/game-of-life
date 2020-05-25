@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,13 +7,13 @@ public class Simulator {
     private List<World> worlds;
     private int currentWorldIndex;
 
-    public Simulator() {
-        WorldInitializer worldInitializer = new WorldInitializer();
-        this.worlds = new ArrayList<>();
-        this.worlds.add(worldInitializer.initBulletWorld());
-        this.worlds.add(worldInitializer.initWorld1());
-        this.worlds.add(worldInitializer.initWorld2());
-        this.worlds.add(worldInitializer.initWorld3());
+    public Simulator(List<World> worlds) {
+        //WorldInitializer worldInitializer = new WorldInitializer();
+        this.worlds = worlds;
+        //this.worlds.add(worldInitializer.initBulletWorld());
+        //this.worlds.add(worldInitializer.initWorld1());
+        //this.worlds.add(worldInitializer.initWorld2());
+        //this.worlds.add(worldInitializer.initWorld3());
         this.currentWorldIndex = 0;
     }
 

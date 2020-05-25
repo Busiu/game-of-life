@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 public class World {
@@ -30,13 +31,11 @@ public class World {
 
     public CellState getCellState(Position position) {
         Cell cell = worldMapState.get(position);
-        int[][] cellNeighbours = Cell.getNeighbours();
+        List<Position> neighboursPositions = position.getNeighbours();
         int nAliveNeighbours = 0;
 
-        for (int i = 0; i < cellNeighbours.length; i++) {
-            Cell neighbourCell = worldMapState.get(
-                    new Position(position.getX() + cellNeighbours[i][0], position.getY() + cellNeighbours[i][1])
-            );
+        for (Position neighbourPosition : neighboursPositions) {
+            Cell neighbourCell = worldMapState.get(neighbourPosition);
             if (neighbourCell == null) {
                 continue;
             }

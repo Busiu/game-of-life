@@ -5,31 +5,40 @@ import java.util.Random;
 
 public class WorldLoader {
 
-    public World loadWorld(File file) throws IOException {
+    public World loadWorld(File file) throws IOException, FileFormatException {
         Map<Position, Cell> worldMap = new HashMap<>();
 
         BufferedReader fileReader = new BufferedReader(new FileReader(file));
-        int worldWidth = Integer.parseInt(fileReader.readLine());
-        int worldHeight = Integer.parseInt(fileReader.readLine());
-        String line;
+        int worldWidth;
+        int worldHeight;
+        try {
+            worldWidth = Integer.parseInt(fileReader.readLine());
+            worldHeight = Integer.parseInt(fileReader.readLine());
+        }
+        catch (NumberFormatException e) {
+            throw new FileFormatException(file.getName() +
+                " -> two first rows (width and height of the map) are in wrong format!"
+            );
+        }
 
-        System.out.println(file.getAbsolutePath());
-        System.out.println(worldWidth);
-        System.out.println(worldHeight);
+        String line;
 
         for (int yCoord = 0; yCoord < worldHeight; yCoord++) {
             line = fileReader.readLine();
-            System.out.println(line);
             if (line == null) {
-                //TODO: Exception ktory mowi, ze zly format pliku!
+                throw new FileFormatException(file.getName() +
+                    " -> world height given at the beginning of this file mismatches the actual number of rows!"
+                );
             }
             if (line.length() != worldWidth) {
-                //TODO: Exception ktory mowi, ze zly format pliku!
+                throw new FileFormatException(file.getName() +
+                    " -> certain row contains different number of chars than one given at the beginning of this file!"
+                );
             }
 
             for (int xCoord = 0; xCoord < worldWidth; xCoord++) {
                 char cellValueInChar = line.charAt(xCoord);
-                Cell cell = new Cell(true);
+                Cell cell;
                 switch (cellValueInChar) {
                     case 'X': {
                         cell = new Cell(true);
@@ -50,7 +59,9 @@ public class WorldLoader {
                         break;
                     }
                     default: {
-                        //TODO: Exception, ze znaleziono nieprawidlowy znak w char mapie
+                        throw new FileFormatException(file.getName() +
+                            " -> world map contains char different from 'X', '0' or '?' !"
+                        );
                     }
                 }
 

@@ -19,7 +19,12 @@ public class WorldLoaderSupervisor {
 
         List<World> worlds = new ArrayList<>();
         for (File file : filesInFolder) {
-            worlds.add(worldLoader.loadWorld(file));
+            try {
+                worlds.add(worldLoader.loadWorld(file));
+            }
+            catch (FileFormatException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         return worlds;

@@ -11,14 +11,6 @@ public class Position {
         this.y = y;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public List<Position> getNeighbours() {
         List<Position> positions = new ArrayList<>();
         positions.add(new Position(x - 1, y - 1));

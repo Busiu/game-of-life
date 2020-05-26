@@ -17,7 +17,8 @@ public class WorldLoader {
         }
         catch (NumberFormatException e) {
             throw new FileFormatException(file.getName() +
-                " -> two first rows (width and height of the map) are in wrong format!"
+                " not loaded" +
+                " -> two first rows (width and height of the map) are in the wrong format!"
             );
         }
 
@@ -27,11 +28,13 @@ public class WorldLoader {
             line = fileReader.readLine();
             if (line == null) {
                 throw new FileFormatException(file.getName() +
+                    " not loaded" +
                     " -> world height given at the beginning of this file mismatches the actual number of rows!"
                 );
             }
             if (line.length() != worldWidth) {
                 throw new FileFormatException(file.getName() +
+                    " not loaded" +
                     " -> certain row contains different number of chars than one given at the beginning of this file!"
                 );
             }
@@ -60,6 +63,7 @@ public class WorldLoader {
                     }
                     default: {
                         throw new FileFormatException(file.getName() +
+                            " not loaded" +
                             " -> world map contains char different from 'X', '0' or '?' !"
                         );
                     }

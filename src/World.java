@@ -36,31 +36,13 @@ public class World {
 
         for (Position neighbourPosition : neighboursPositions) {
             Cell neighbourCell = worldMapState.get(neighbourPosition);
-            if (neighbourCell == null) {
-                continue;
-            }
-            else if (neighbourCell.isAlive()) {
-                nAliveNeighbours++;
+            if (neighbourCell != null) {
+                if (neighbourCell.isAlive()) {
+                    nAliveNeighbours++;
+                }
             }
         }
 
         return new CellState(cell.isAlive(), nAliveNeighbours);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (int yCoord = 0; yCoord < getHeight(); yCoord++) {
-            for (int xCoord = 0; xCoord < getWidth(); xCoord++) {
-                if (worldMapState.get(new Position(xCoord, yCoord)).isAlive()) {
-                    result.append("X ");
-                }
-                else {
-                    result.append(". ");
-                }
-            }
-            result.append("\n");
-        }
-        return result.toString();
     }
 }

@@ -18,16 +18,19 @@ public class Simulator {
 
         for (Position position : world.getWorldMapState().keySet()) {
             CellState cellState = world.getCellState(position);
-            if (cellState.isAlive() && cellState.getnAliveNeighbours() < 2) {
+            boolean isAlive = cellState.isAlive();
+            int nAliveNeighbours = cellState.getnAliveNeighbours();
+
+            if (isAlive && nAliveNeighbours < 2) {
                 newWorldMapState.put(position, new Cell(false));
             }
-            else if (cellState.isAlive() && cellState.getnAliveNeighbours() < 4) {
+            else if (isAlive && nAliveNeighbours < 4) {
                 newWorldMapState.put(position, new Cell(true));
             }
-            else if (cellState.isAlive()) {
+            else if (isAlive) {
                 newWorldMapState.put(position, new Cell(false));
             }
-            else if (!cellState.isAlive() && cellState.getnAliveNeighbours() == 3) {
+            else if (nAliveNeighbours == 3) {
                 newWorldMapState.put(position, new Cell(true));
             }
             else {

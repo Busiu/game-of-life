@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Position {
 
     private final int x;
@@ -14,6 +17,19 @@ public class Position {
 
     public int getY() {
         return y;
+    }
+
+    public List<Position> getNeighbours() {
+        List<Position> positions = new ArrayList<>();
+        positions.add(new Position(x - 1, y - 1));
+        positions.add(new Position(x, y - 1));
+        positions.add(new Position(x + 1, y - 1));
+        positions.add(new Position(x - 1, y));
+        positions.add(new Position(x + 1, y));
+        positions.add(new Position(x - 1, y + 1));
+        positions.add(new Position(x, y + 1));
+        positions.add(new Position(x + 1, y + 1));
+        return positions;
     }
 
     @Override

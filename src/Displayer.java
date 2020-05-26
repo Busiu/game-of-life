@@ -9,7 +9,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Displayer extends Application {
@@ -21,8 +23,10 @@ public class Displayer extends Application {
     private final static int WINDOW_HEIGHT = 800;
     private final static int WINDOW_WIDTH = 800;
 
-    private final static Paint ALIVE_COLOR = Color.BROWN;
-    private final static Paint DEAD_COLOR = Color.AQUAMARINE;
+    private final static String WORLD_MAP_FOLDER = "WorldMaps";
+
+    private final static Paint ALIVE_COLOR = Color.BLACK;
+    private final static Paint DEAD_COLOR = Color.GREEN;
 
     private Stage simulationStage;
 
@@ -32,11 +36,20 @@ public class Displayer extends Application {
 
     @Override
     public void start(Stage stage) {
-        simulator = new Simulator();
-        this.simulationStage = stage;
+        WorldLoaderSupervisor worldLoaderSupervisor = new WorldLoaderSupervisor();
+        try {
+            List<World> worlds = worldLoaderSupervisor.loadWorldsFromFile(WORLD_MAP_FOLDER);
+            simulator = new Simulator(worlds);
 
-        createDisplayForSimulationOfNewWorld();
-        createSimulationLoop();
+            this.simulationStage = stage;
+
+            createDisplayForSimulationOfNewWorld();
+            createSimulationLoop();
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage() + " -> probably this folder does not exist!");
+            Platform.exit();
+        }
     }
 
     private void createDisplayForSimulationOfNewWorld() {

@@ -11,7 +11,7 @@ public class WorldLoaderSupervisor {
 
     private final WorldLoader worldLoader = new WorldLoader();
 
-    public List<World> loadWorldsFromFile(String fileName) throws IOException {
+    public List<World> loadWorldsFromFile(String fileName) throws IOException, NoValidMapException{
         List<File> filesInFolder = Files.walk(Paths.get(fileName))
                 .filter(Files::isRegularFile)
                 .map(Path::toFile)
@@ -25,6 +25,12 @@ public class WorldLoaderSupervisor {
             catch (FileFormatException e) {
                 System.out.println(e.getMessage());
             }
+        }
+
+        if (worlds.size() == 0) {
+            throw new NoValidMapException(fileName +
+                    " contains no valid world maps. Shutting down the app..."
+            );
         }
 
         return worlds;

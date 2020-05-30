@@ -50,6 +50,10 @@ public class Displayer extends Application {
             System.out.println(e.getMessage() + " -> probably this folder does not exist!");
             Platform.exit();
         }
+        catch (NoValidMapException e) {
+            System.out.println(e.getMessage());
+            Platform.exit();
+        }
     }
 
     private void createDisplayForSimulationOfNewWorld() {

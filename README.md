@@ -1,12 +1,14 @@
 # Game of Life
 ### Installation & Requirements
 To compile this project you need JDK with JavaFX - for instance JDK 8.\
-If you have JDK with JavaFX yet - follow undermentioned steps:
+If you have JDK with JavaFX yet - follow undermentioned steps (works on Linux kernel based systems):
 1. Clone this repo.
 2. Having entered it, type "javac -d  $(find src -name *.java)" to compile project.
 3. Type "java gameoflife.Displayer" to run project.
 
-### Predefined patterns:
+On Windows you can use Git Bash application to posses find src -name *.java command. 
+
+### Predefined patterns
 This project contains 9 predefined patterns:
 1. 10x10 grid with a single Glider.
 2. 50x50 grid where every cell is random.
@@ -30,13 +32,13 @@ The map file format is the following:\
 Example file:\
 10\
 10\
-X0X0000000\
-0XX0000000\
-0X00000000\
-0000000000\
-0000000000\
-0000000000\
-0000000000\
-000?????00\
-000?????00\
-0000000000
+X0X00000?0\
+0XX00000?0\
+0X000000?0\
+00000000?0\
+00000000?0\
+00000000?0\
+00000000?0\
+00000000?0\
+00000000?0\
+00000000?0

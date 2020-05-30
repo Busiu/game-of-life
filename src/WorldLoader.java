@@ -3,6 +3,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/*
+    This class loads world pattern from given file. It returns world which is ready to simulate.
+ */
 public class WorldLoader {
 
     public World loadWorld(File file) throws IOException, FileFormatException {

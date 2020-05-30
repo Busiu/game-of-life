@@ -1,9 +1,16 @@
 import java.util.List;
 import java.util.Map;
 
+/*
+    This class is a model representation of a grid/world.
+ */
 public class World {
 
+    /*
+        Current generation of cells.
+     */
     private Map<Position, Cell> worldMapState;
+
     private int width;
     private int height;
 
@@ -29,6 +36,10 @@ public class World {
         return height;
     }
 
+    /*
+        This method returns information necessary to determine, if cell will be alive in the next generation, from given
+        position.
+     */
     public CellState getCellState(Position position) {
         Cell cell = worldMapState.get(position);
         List<Position> neighboursPositions = position.getNeighbours();

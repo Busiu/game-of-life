@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    This class simply represents position of a cell in a grid.
+ */
 public class Position {
 
     private final int x;
@@ -11,6 +14,17 @@ public class Position {
         this.y = y;
     }
 
+    /*
+        This method returns positions which are in neighbourhood of this position. For further explanation:
+        00000
+        0NNN0
+        0NXN0
+        0NNN0
+        00000
+        X - current position
+        N - neighbours of X
+        0 - others
+     */
     public List<Position> getNeighbours() {
         List<Position> positions = new ArrayList<>();
         positions.add(new Position(x - 1, y - 1));

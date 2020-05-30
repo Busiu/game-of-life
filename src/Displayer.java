@@ -14,26 +14,54 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+    This class is a main class in this project. Its main responsibility is to display another generations of our game
+    of life and to communicate with Simulator instance.
+ */
 public class Displayer extends Application {
 
+    /*
+        Frequency of the game loop constants. To change number of FPS, just change value of FPS constant.
+     */
     private final static int FPS = 30;
     private final static int NANOS_IN_SECOND = 1_000_000_000;
     private final static int REFRESH_RATE = NANOS_IN_SECOND / FPS;
 
+    /*
+        Application window size in pixels.
+     */
     private final static int WINDOW_HEIGHT = 800;
     private final static int WINDOW_WIDTH = 800;
 
+    /*
+        Folder from which we will receive initial patterns to our simulation.
+     */
     private final static String WORLD_MAP_FOLDER = "WorldMaps";
 
+    /*
+        Predefined colors of cells.
+     */
     private final static Paint ALIVE_COLOR = Color.BLACK;
     private final static Paint DEAD_COLOR = Color.GREEN;
 
+    /*
+        JavaFx thing. Stage is necessary to display our simulation.
+     */
     private Stage simulationStage;
 
+    /*
+        Contains and works with all logic of a simulation.
+     */
     private Simulator simulator;
 
+    /*
+        World map/grid representation.
+     */
     private Map<Position, Rectangle> worldCells;
 
+    /*
+        This method gets initial patterns from given folder and then starts a simulation.
+     */
     @Override
     public void start(Stage stage) {
         WorldLoaderSupervisor worldLoaderSupervisor = new WorldLoaderSupervisor();
@@ -56,6 +84,9 @@ public class Displayer extends Application {
         }
     }
 
+    /*
+        This method translates our world's model into graphical representation.
+     */
     private void createDisplayForSimulationOfNewWorld() {
         int currentWorldMapHeight = simulator.getHeightOfCurrentWorldMap();
         int currentWorldMapWidth = simulator.getWidthOfCurrentWorldMap();
@@ -88,15 +119,22 @@ public class Displayer extends Application {
         simulationStage.show();
     }
 
+    /*
+        This method creates listeners for our simulation.
+     */
     private void createKeyListeners(Scene scene) {
         scene.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
-                enterListener();
+                setEnterListener();
             }
         });
     }
 
-    private void enterListener() {
+    /*
+        This method defines enter listener behaviour. Clicking enter causes moving to the next world/grid if we have one
+        or shutting down the app.
+     */
+    private void setEnterListener() {
         if (simulator.moveToTheNextWorld()) {
             createDisplayForSimulationOfNewWorld();
         }
@@ -105,6 +143,10 @@ public class Displayer extends Application {
         }
     }
 
+    /*
+        This method creates an animation of our simulation and set frequency of the game loop into predefined
+        FPS number.
+     */
     private void createSimulationLoop() {
         AnimationTimer simulationTimer = new AnimationTimer() {
             private long lastUpdate;
@@ -121,6 +163,9 @@ public class Displayer extends Application {
         simulationTimer.start();
     }
 
+    /*
+        This method updates display to the newest world map state (which is passed by an argument).
+     */
     private void updateDisplay(Map<Position, Cell> currentWorldMapState) {
         for (Position position : currentWorldMapState.keySet()) {
             Paint cellColor;
@@ -134,6 +179,9 @@ public class Displayer extends Application {
         }
     }
 
+    /*
+        Main method runs start() method in a nutshell.
+     */
     public static void main(String[] args) {
         launch(args);
     }

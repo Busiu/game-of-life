@@ -2,9 +2,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+    This class simulates our worlds. It contains a list of worlds so single instance is able to simulate multiple worlds
+    in order.
+ */
 public class Simulator {
 
+    /*
+        List of our worlds to simulate.
+     */
     private List<World> worlds;
+
+    /*
+        Index defining which world from the list is being simulated now.
+     */
     private int currentWorldIndex;
 
     public Simulator(List<World> worlds) {
@@ -12,6 +23,9 @@ public class Simulator {
         this.currentWorldIndex = 0;
     }
 
+    /*
+        This method simulates one step of a world -> creates new generation of cells.
+     */
     public Map<Position, Cell> simulateOneStep() {
         World world = worlds.get(currentWorldIndex);
         Map<Position, Cell> newWorldMapState = new HashMap<>();
@@ -50,10 +64,16 @@ public class Simulator {
         return worlds.get(currentWorldIndex).getWidth();
     }
 
+    /*
+        This method returns state of current world which is used in Displayer.
+     */
     public Map<Position, Cell> getStateOfCurrentWorldMap() {
         return worlds.get(currentWorldIndex).getWorldMapState();
     }
 
+    /*
+        This method enables to start simulate a new world from the list.
+     */
     public boolean moveToTheNextWorld() {
         if (currentWorldIndex < worlds.size() - 1) {
             currentWorldIndex++;

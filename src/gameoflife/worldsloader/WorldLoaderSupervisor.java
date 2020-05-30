@@ -1,3 +1,7 @@
+package gameoflife.worldsloader;
+
+import gameoflife.model.World;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /*
-    This class loads worlds from given folder. It delegates loading individual worlds to WorldLoader instance.
+    This class loads worlds from given folder. It delegates loading individual worlds to gameoflife.worldsloader.WorldLoader instance.
  */
 public class WorldLoaderSupervisor {
 

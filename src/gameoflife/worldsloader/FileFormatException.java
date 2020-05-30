@@ -1,3 +1,5 @@
+package gameoflife.worldsloader;
+
 /*
     This exception is used in situation, when file with initial pattern is in wrong format (just wrong written).
  */

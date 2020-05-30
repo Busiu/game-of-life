@@ -1,3 +1,10 @@
+package gameoflife;
+
+import gameoflife.model.Cell;
+import gameoflife.model.CellState;
+import gameoflife.model.Position;
+import gameoflife.model.World;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +18,7 @@ public class Simulator {
     /*
         List of our worlds to simulate.
      */
-    private List<World> worlds;
+    private final List<World> worlds;
 
     /*
         Index defining which world from the list is being simulated now.
@@ -65,7 +72,7 @@ public class Simulator {
     }
 
     /*
-        This method returns state of current world which is used in Displayer.
+        This method returns state of current world which is used in gameoflife.Displayer.
      */
     public Map<Position, Cell> getStateOfCurrentWorldMap() {
         return worlds.get(currentWorldIndex).getWorldMapState();

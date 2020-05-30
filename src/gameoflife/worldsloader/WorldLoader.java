@@ -1,3 +1,9 @@
+package gameoflife.worldsloader;
+
+import gameoflife.model.Cell;
+import gameoflife.model.Position;
+import gameoflife.model.World;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;

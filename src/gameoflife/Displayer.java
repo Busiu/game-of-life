@@ -1,3 +1,10 @@
+package gameoflife;
+
+import gameoflife.model.Cell;
+import gameoflife.model.Position;
+import gameoflife.model.World;
+import gameoflife.worldsloader.NoValidMapException;
+import gameoflife.worldsloader.WorldLoaderSupervisor;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -16,7 +23,7 @@ import java.util.Map;
 
 /*
     This class is a main class in this project. Its main responsibility is to display another generations of our game
-    of life and to communicate with Simulator instance.
+    of life and to communicate with gameoflife.Simulator instance.
  */
 public class Displayer extends Application {
 
@@ -55,7 +62,7 @@ public class Displayer extends Application {
     private Simulator simulator;
 
     /*
-        World map/grid representation.
+        gameoflife.model.World map/grid representation.
      */
     private Map<Position, Rectangle> worldCells;
 

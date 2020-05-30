@@ -1,3 +1,5 @@
+package gameoflife.model;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +13,8 @@ public class World {
      */
     private Map<Position, Cell> worldMapState;
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
     public World(Map<Position, Cell> worldMap, int width, int height) {
         this.worldMapState = worldMap;

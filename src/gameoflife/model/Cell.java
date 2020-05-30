@@ -1,10 +1,12 @@
+package gameoflife.model;
+
 /*
     This class is a model representation of a single cell.
  */
 public class Cell {
 
     /*
-        Cell's interior state.
+        gameoflife.model.Cell's interior state.
      */
     private final boolean isAlive;
 

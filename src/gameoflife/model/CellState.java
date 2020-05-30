@@ -7,7 +7,7 @@ package gameoflife.model;
 public class CellState {
 
     /*
-        gameoflife.model.Cell's interior state.
+        Cell's interior state.
      */
     private final boolean isAlive;
 

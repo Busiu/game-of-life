@@ -23,7 +23,7 @@ import java.util.Map;
 
 /*
     This class is a main class in this project. Its main responsibility is to display another generations of our game
-    of life and to communicate with gameoflife.Simulator instance.
+    of life and to communicate with Simulator instance.
  */
 public class Displayer extends Application {
 
@@ -62,7 +62,7 @@ public class Displayer extends Application {
     private Simulator simulator;
 
     /*
-        gameoflife.model.World map/grid representation.
+        World map/grid representation.
      */
     private Map<Position, Rectangle> worldCells;
 

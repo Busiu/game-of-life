@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /*
-    This class loads worlds from given folder. It delegates loading individual worlds to gameoflife.worldsloader.WorldLoader instance.
+    This class loads worlds from given folder. It delegates loading individual worlds to WorldLoader instance.
  */
 public class WorldLoaderSupervisor {
 

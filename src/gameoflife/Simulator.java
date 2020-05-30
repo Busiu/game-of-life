@@ -72,7 +72,7 @@ public class Simulator {
     }
 
     /*
-        This method returns state of current world which is used in gameoflife.Displayer.
+        This method returns state of current world which is used in Displayer.
      */
     public Map<Position, Cell> getStateOfCurrentWorldMap() {
         return worlds.get(currentWorldIndex).getWorldMapState();
